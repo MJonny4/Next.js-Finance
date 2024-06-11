@@ -20,7 +20,7 @@ export const useDeleteCategory = (id?: string) => {
                 queryKey: ['category', { id }],
             })
             queryClient.invalidateQueries({
-                queryKey: ['.categories'],
+                queryKey: ['categories'],
             })
             // TODO: Invalidate summary and transactions queries
         },

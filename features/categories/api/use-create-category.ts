@@ -18,7 +18,7 @@ export const useCreateCategory = () => {
             toast.success('Category created successfully')
             // Fetch Category everytime you create a new Category
             queryClient.invalidateQueries({
-                queryKey: ['.categories'],
+                queryKey: ['categories'],
             })
         },
         onError: (error) => {

@@ -11,14 +11,14 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useBulkDeleteCategories } from '@/features/categories/api/use-bulk-delete-categories'
 
 export default function CategoriesPage() {
-    const newAccount = useNewCategory()
-    const accountsQuery = useGetCategories()
+    const newCategory = useNewCategory()
+    const categoriesQuery = useGetCategories()
     const deleteAccounts = useBulkDeleteCategories()
 
-    const accounts = accountsQuery?.data || []
-    const isDisabled = accountsQuery.isLoading || deleteAccounts.isPending
+    const categories = categoriesQuery?.data || []
+    const isDisabled = categoriesQuery.isLoading || deleteAccounts.isPending
 
-    if (accountsQuery.isLoading) {
+    if (categoriesQuery.isLoading) {
         return (
             <div className='max-w-screen-2xl mx-auto w-full pb-10 -mt-24'>
                 <Card className='border-none drop-shadow-md'>
@@ -40,16 +40,16 @@ export default function CategoriesPage() {
             <Card className='border-none drop-shadow-md'>
                 <CardHeader className='gap-y-2 lg:flex-row lg:items-center lg:justify-between'>
                     <CardTitle className='text-xl line-clamp-1'>Categories page</CardTitle>
-                    <Button size={'sm'} onClick={newAccount.onOpen}>
+                    <Button size={'sm'} onClick={newCategory.onOpen}>
                         <Plus className='size-4 mr-2' />
                         Add new
                     </Button>
                 </CardHeader>
                 <CardContent>
                     <DataTable
-                        filterKey='email'
+                        filterKey='name'
                         columns={columns}
-                        data={accounts}
+                        data={categories}
                         onDelete={(row) => {
                             const ids = row?.map((r) => r.original.id)
                             deleteAccounts.mutate({ ids })

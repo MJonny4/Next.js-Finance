@@ -47,7 +47,7 @@ export default function AccountsPage() {
                 </CardHeader>
                 <CardContent>
                     <DataTable
-                        filterKey='email'
+                        filterKey='name'
                         columns={columns}
                         data={accounts}
                         onDelete={(row) => {

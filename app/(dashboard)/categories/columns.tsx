@@ -6,11 +6,11 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
 
-import { InferResponseType, InferRequestType } from 'hono'
 import { client } from '@/lib/hono'
+import { InferResponseType } from 'hono'
 import { Actions } from './actions'
 
-export type ResponseType = InferResponseType<typeof client.api.accounts.$get, 200>['data'][0]
+export type ResponseType = InferResponseType<typeof client.api.categories.$get, 200>['data'][0]
 
 export const columns: ColumnDef<ResponseType>[] = [
     {
