@@ -3,17 +3,17 @@
 import { DataTable } from '@/components/data-table'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { useNewAccount } from '@/features/accounts/hooks/use-new-account'
+import { useNewCategory } from '@/features/categories/hooks/use-new-category'
 import { Loader2, Plus } from 'lucide-react'
 import { columns } from './columns'
-import { useGetAccounts } from '@/features/accounts/api/use-get-accounts'
+import { useGetCategories } from '@/features/categories/api/use-get-categories'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useBulkDeleteAccounts } from '@/features/accounts/api/use-bulk-delete-accounts'
+import { useBulkDeleteCategories } from '@/features/categories/api/use-bulk-delete-categories'
 
 export default function CategoriesPage() {
-    const newAccount = useNewAccount()
-    const accountsQuery = useGetAccounts()
-    const deleteAccounts = useBulkDeleteAccounts()
+    const newAccount = useNewCategory()
+    const accountsQuery = useGetCategories()
+    const deleteAccounts = useBulkDeleteCategories()
 
     const accounts = accountsQuery?.data || []
     const isDisabled = accountsQuery.isLoading || deleteAccounts.isPending

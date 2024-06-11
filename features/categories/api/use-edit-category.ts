@@ -16,7 +16,7 @@ export const useEditCategory = (id?: string) => {
         },
         onSuccess: () => {
             toast.success('Category updated successfully')
-            // Fetch account everytime you create a new account
+            // Fetch categories everytime you create a new categories
             queryClient.invalidateQueries({
                 queryKey: ['category', { id }],
             })

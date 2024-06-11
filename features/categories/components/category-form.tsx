@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { insertAccountSchema } from '@/db/schema'
+import { insertCategorySchema } from '@/db/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Trash } from 'lucide-react'
 import { useForm } from 'react-hook-form'
@@ -8,7 +8,7 @@ import { z } from 'zod'
 
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
 
-const formSchema = insertAccountSchema.pick({
+const formSchema = insertCategorySchema.pick({
     name: true,
 })
 
@@ -22,7 +22,7 @@ type Props = {
     disabled?: boolean
 }
 
-export default function AccountForm({ id, defaultValues, onSubmit, onDelete, disabled }: Props) {
+export default function CategoryForm({ id, defaultValues, onSubmit, onDelete, disabled }: Props) {
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: defaultValues,
@@ -46,13 +46,13 @@ export default function AccountForm({ id, defaultValues, onSubmit, onDelete, dis
                         <FormItem>
                             <FormLabel>Name</FormLabel>
                             <FormControl>
-                                <Input disabled={disabled} placeholder='e.g. Cash, Bank, Credit Card' {...field} />
+                                <Input disabled={disabled} placeholder='e.g. Food, Travel, etc.' {...field} />
                             </FormControl>
                         </FormItem>
                     )}
                 />
                 <Button className='w-full' disabled={disabled}>
-                    {id ? 'Save Changes' : 'Create Account'}
+                    {id ? 'Save Changes' : 'Create Category'}
                 </Button>
                 {!!id && (
                     <Button
@@ -63,7 +63,7 @@ export default function AccountForm({ id, defaultValues, onSubmit, onDelete, dis
                         variant={'outline'}
                     >
                         <Trash className='size-4' />
-                        <span className='ml-2'>Delete Account</span>
+                        <span className='ml-2'>Delete Category</span>
                     </Button>
                 )}
             </form>

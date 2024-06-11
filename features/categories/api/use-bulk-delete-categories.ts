@@ -6,7 +6,7 @@ import { toast } from 'sonner'
 type ResponseType = InferResponseType<(typeof client.api.categories)['bulk-delete']['$post']>
 type RequestType = InferRequestType<(typeof client.api.categories)['bulk-delete']['$post']>['json']
 
-export const useBulkDeleteAccountsCategories = () => {
+export const useBulkDeleteCategories = () => {
     const queryClient = useQueryClient()
 
     const mutation = useMutation<ResponseType, Error, RequestType>({
@@ -18,7 +18,7 @@ export const useBulkDeleteAccountsCategories = () => {
         },
         onSuccess: () => {
             toast.success('Categories deleted!')
-            // Fetch account everytime you create a new account
+            // Fetch categories everytime you create a new categories
             queryClient.invalidateQueries({
                 queryKey: ['categories'],
             })

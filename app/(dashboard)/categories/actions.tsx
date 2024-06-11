@@ -16,7 +16,7 @@ export const Actions = ({ id }: Props) => {
     const deleteMutation = useDeleteAccount(id)
 
     const [ConfirmDialog, confirm] = useConfirm(
-        'Are you sure you want to delete this account?',
+        'Are you sure you want to delete this Category?',
         "This action can't be undone.",
     )
 

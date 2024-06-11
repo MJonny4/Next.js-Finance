@@ -15,7 +15,7 @@ export const useDeleteCategory = (id?: string) => {
         },
         onSuccess: () => {
             toast.success('Category deleted successfully')
-            // Fetch account everytime you create a new account
+            // Fetch categories everytime you create a new categories
             queryClient.invalidateQueries({
                 queryKey: ['category', { id }],
             })
