@@ -1,7 +1,7 @@
 export default function Home() {
     return (
         <>
-            <h1>This is an authenticated page. You can see the user button below.</h1>
+            <h1>Home Page</h1>
         </>
     )
 }
