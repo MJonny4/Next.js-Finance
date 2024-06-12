@@ -61,7 +61,7 @@ export default function ImportCard({ data, onCanceled, onSubmit }: Props) {
                 .map((row) => {
                     const transformedRow = row.map((_cell, index) => {
                         const columnIndex = getColumnIndex(`column_${index}`)
-                        return selectedColumns[`column_${index}`] ? _cell : null
+                        return selectedColumns[`column_${columnIndex}`] ? _cell : null
                     })
 
                     return transformedRow.every((item) => item === null) ? [] : transformedRow
@@ -80,9 +80,10 @@ export default function ImportCard({ data, onCanceled, onSubmit }: Props) {
             }, {})
         })
 
+
         const fomattedData = arrayOfData.map((row) => ({
             ...row,
-            amount: convertAmountToMiliunits(parseFloat(row.amount.replace(',', '.'))),
+            amount: convertAmountToMiliunits(parseFloat(row.amount?.replace(',', '.'))),
             date: format(new Date(row.date), outputFormat),
         }))
 

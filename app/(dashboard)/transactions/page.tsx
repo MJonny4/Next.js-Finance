@@ -13,6 +13,11 @@ import { useState } from 'react'
 import UploadButton from './upload-button'
 import ImportCard from './import-card'
 
+import { transactions as transactionsSchema } from '@/db/schema'
+import { toast } from 'sonner'
+import { useBulkCreateTransactions } from '@/features/transactions/api/use-bulk-create-transactions'
+import AccountDialog from './account-dialog'
+
 enum VARIANTS {
     LIST = 'LIST',
     IMPORT = 'IMPORT',
@@ -27,6 +32,8 @@ type InitialImportResults = {
 export default function TransactionsPage() {
     const [variant, setVariant] = useState<VARIANTS>(VARIANTS.LIST)
     const [importResults, setImportResults] = useState<InitialImportResults | null>(null)
+    const [importValues, setImportValues] = useState<(typeof transactionsSchema.$inferInsert)[]>([])
+    const [isAccountDialogOpen, setIsAccountDialogOpen] = useState(false)
 
     const onUpload = (results: InitialImportResults) => {
         setImportResults(results)
@@ -41,6 +48,7 @@ export default function TransactionsPage() {
     const newTransaction = useNewTransaction()
     const transactionsQuery = useGetTransactions()
     const deleteTransactions = useBulkDeleteTransactions()
+    const bulkCreateTransactions = useBulkCreateTransactions()
 
     const transactions = transactionsQuery?.data || []
     const isDisabled = transactionsQuery.isLoading || deleteTransactions.isPending
@@ -62,8 +70,41 @@ export default function TransactionsPage() {
         )
     }
 
+    const onSubmitImport = async (values: (typeof transactionsSchema.$inferInsert)[]) => {
+        setImportValues(values)
+        setIsAccountDialogOpen(true)
+    }
+
+    const handleAccountSubmit = async (accountId: string) => {
+        if (!accountId) {
+            return toast.error('Please select an account')
+        }
+
+        const data = importValues.map((value) => ({
+            ...value,
+            accountId: accountId,
+        }))
+
+        bulkCreateTransactions.mutate(data, {
+            onSuccess: () => {
+                onCancelImport()
+                setIsAccountDialogOpen(false)
+                setImportValues([])
+            },
+        })
+    }
+
     if (variant === VARIANTS.IMPORT) {
-        return <ImportCard data={importResults?.data || []} onCanceled={onCancelImport} onSubmit={() => {}} />
+        return (
+            <>
+                <AccountDialog
+                    open={isAccountDialogOpen}
+                    onSubmit={handleAccountSubmit}
+                    onCancel={() => setIsAccountDialogOpen(false)}
+                />
+                <ImportCard data={importResults?.data || []} onCanceled={onCancelImport} onSubmit={onSubmitImport} />
+            </>
+        )
     }
 
     return (
