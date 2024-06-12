@@ -111,7 +111,13 @@ const app = new Hono()
                     accountId: transactions.accountId,
                 })
                 .from(transactions)
-                .where(and(eq(transactions.id, id), eq(accounts.userId, auth?.userId)))
+                .innerJoin(accounts, eq(transactions.accountId, accounts.id))
+                .where(
+                    and(
+                        eq(transactions.id, id),
+                        eq(accounts.userId, auth?.userId),
+                    ),
+                )
 
             if (!data) {
                 return c.json(

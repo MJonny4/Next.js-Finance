@@ -6,12 +6,14 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
 
-import { InferResponseType, InferRequestType } from 'hono'
-import { client } from '@/lib/hono'
-import { Actions } from './actions'
-import { format } from 'date-fns'
-import { formatCurrency } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
+import { client } from '@/lib/hono'
+import { formatCurrency } from '@/lib/utils'
+import { format } from 'date-fns'
+import { InferResponseType } from 'hono'
+import AccountColumn from './account-column'
+import { Actions } from './actions'
+import CategoryColumn from './category-column'
 
 export type ResponseType = InferResponseType<typeof client.api.transactions.$get, 200>['data'][0]
 
@@ -61,7 +63,9 @@ export const columns: ColumnDef<ResponseType>[] = [
             )
         },
         cell: ({ row }) => {
-            return <span>{row.original.category}</span>
+            return <CategoryColumn
+        id={row.original.id}
+            category={row?.original?.category} categoryId={row.original.categoryId} />
         },
     },
     {
@@ -105,7 +109,7 @@ export const columns: ColumnDef<ResponseType>[] = [
             )
         },
         cell: ({ row }) => {
-            return <span>{row.original.account}</span>
+            return <AccountColumn account={row.original.account} accountId={row.original.accountId} />
         },
     },
     {
