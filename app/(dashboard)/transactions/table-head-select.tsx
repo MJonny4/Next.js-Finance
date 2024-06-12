@@ -26,10 +26,10 @@ export default function TableHeadSelect({ columnIndex, selectedColumns, onChange
                 <SelectItem value='skip'>Skip</SelectItem>
                 {options.map((option, index) => {
                     // Cambiar currentSelect por selectedColumns[`column_${columnIndex}`]
-                    const disabled = Object.values(selectedColumns).includes(option) && currentSelect !== option
+                    const disabled = Object.values(selectedColumns).includes(option) && selectedColumns[`column_${columnIndex}`] !== option
 
                     return (
-                        <SelectItem key={index} value={option} disabled={disabled} className='capitalize'>
+                        <SelectItem key={index} value={option} disabled={disabled} className=''>
                             {option}
                         </SelectItem>
                     )
