@@ -24,11 +24,15 @@ export const formatCurrency = (amount: number) => {
 }
 
 export const calculatePercentageChange = (current: number, previous: number) => {
-    if (previous === 0 || previous === null) {
-        return previous === current ? 0 : 100
+    if (previous === 0) {
+        return current === 0 ? 0 : Math.sign(current) * 100;
     }
-    return ((current - previous) / previous) * 100
-}
+    if (previous === null || current === null) {
+        return null;
+    }
+    const percentageChange = ((current - previous) / Math.abs(previous)) * 100;
+    return (previous < 0 && current < 0) ? Math.abs(percentageChange) : Math.sign(current - previous) * Math.abs(percentageChange);
+};
 
 export const fillMissingDays = (
     activeDays: {
