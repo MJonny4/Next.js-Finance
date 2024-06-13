@@ -27,7 +27,6 @@ export const calculatePercentageChange = (current: number, previous: number) => 
     if (previous === 0 || previous === null) {
         return previous === current ? 0 : 100
     }
-    console.log(previous)
     return ((current - previous) / previous) * 100
 }
 

@@ -4,7 +4,7 @@ import { calculatePercentageChange, fillMissingDays } from '@/lib/utils'
 import { clerkMiddleware, getAuth } from '@hono/clerk-auth'
 import { zValidator } from '@hono/zod-validator'
 import { differenceInDays, parse, subDays } from 'date-fns'
-import { and, desc, eq, gte, lte, sql, sum, lt } from 'drizzle-orm'
+import { and, desc, eq, gte, lte, sql, sum, lt, gt } from 'drizzle-orm'
 import { Hono } from 'hono'
 import { z } from 'zod'
 
@@ -28,7 +28,7 @@ const app = new Hono().get(
         }
 
         const defaultTo = new Date()
-        const defaultFrom = subDays(defaultTo, 30)
+        const defaultFrom = subDays(defaultTo, 31)
 
         const startDate = from ? parse(from, 'yyyy-MM-dd', new Date()) : defaultFrom
         const endDate = to ? parse(to, 'yyyy-MM-dd', new Date()) : defaultTo
@@ -102,7 +102,7 @@ const app = new Hono().get(
                 income: sql`SUM(CASE WHEN ${transactions.amount} >= 0 THEN ${transactions.amount} ELSE 0 END)`.mapWith(
                     Number,
                 ),
-                expenses: sql`SUM(CASE WHEN ${transactions.amount} < 0 THEN ${transactions.amount} ELSE 0 END)`.mapWith(
+                expenses: sql`SUM(CASE WHEN ${transactions.amount} < 0 THEN ABS(${transactions.amount}) ELSE 0 END)`.mapWith(
                     Number,
                 ),
             })
