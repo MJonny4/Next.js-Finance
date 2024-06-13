@@ -51,6 +51,16 @@ export default function DataCard({
     percentageChange = 0,
     variant,
 }: DataCardProps) {
+    const checkPercentageColor = (pctChange: number) => {
+        if (title == 'Expenses' && pctChange < 0) {
+            return 'text-emerald-500'
+        } else if (title != 'Expenses' && pctChange > 0) {
+            return 'text-emerald-500'
+        } else {
+            return 'text-rose-500'
+        }
+    }
+
     return (
         <Card>
             <CardHeader className='flex flex-row items-center justify-between gap-x-4'>
@@ -73,12 +83,7 @@ export default function DataCard({
                         formattingFn={formatCurrency}
                     />
                 </h1>
-                <p
-                    className={cn(
-                        'text-muted-foreground text-sm line-clamp-1',
-                        percentageChange > 0 ? 'text-emerald-500' : 'text-rose-500',
-                    )}
-                >
+                <p className={cn('text-muted-foreground text-sm line-clamp-1', checkPercentageColor(percentageChange))}>
                     {formatPercentage(percentageChange, { addPrefix: true })} from last period
                 </p>
             </CardContent>
