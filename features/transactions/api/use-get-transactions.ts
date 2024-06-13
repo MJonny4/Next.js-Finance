@@ -10,7 +10,6 @@ export const useGetTransactions = () => {
     const accountId = params.get('accountId') || ''
 
     const query = useQuery({
-        // TODO: Checks if the query should be enabled
         queryKey: ['transactions', { from, to, accountId }],
         queryFn: async () => {
             const response = await client.api.transactions.$get({
