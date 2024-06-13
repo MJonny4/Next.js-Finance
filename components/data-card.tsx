@@ -52,7 +52,7 @@ export default function DataCard({
     variant,
 }: DataCardProps) {
     const checkPercentageColor = (pctChange: number | null) => {
-        if (pctChange === null) return 'bg-gray-200 text-gray-500'
+        if (pctChange === null) return 'text-gray-500'
 
         if (title == 'Expenses' && pctChange < 0) {
             return 'text-emerald-500'
