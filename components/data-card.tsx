@@ -40,7 +40,7 @@ interface DataCardProps extends BoxVariants, IconVariants {
     title: string
     value?: number
     dateRange: string
-    percentageChange?: number
+    percentageChange?: number | null | undefined
 }
 
 export default function DataCard({
@@ -51,7 +51,9 @@ export default function DataCard({
     percentageChange = 0,
     variant,
 }: DataCardProps) {
-    const checkPercentageColor = (pctChange: number) => {
+    const checkPercentageColor = (pctChange: number | null) => {
+        if (pctChange === null) return 'bg-gray-200 text-gray-500'
+
         if (title == 'Expenses' && pctChange < 0) {
             return 'text-emerald-500'
         } else if (title != 'Expenses' && pctChange > 0) {

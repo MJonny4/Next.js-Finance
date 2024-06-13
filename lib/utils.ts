@@ -87,11 +87,15 @@ export function formatDateRange(period?: TPeriod) {
 }
 
 export function formatPercentage(
-    value: number,
+    value: number | null | undefined,
     options: { addPrefix?: boolean } = {
         addPrefix: false,
     },
 ) {
+    if (value === null || value === undefined) {
+        return '-'
+    }
+
     const result = new Intl.NumberFormat('de-DE', {
         style: 'percent',
         minimumFractionDigits: 2,
